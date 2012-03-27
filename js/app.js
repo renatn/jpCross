@@ -18,34 +18,35 @@ function createCrossword(width, heigth) {
     placeHolder.appendChild(table);
 }
 
+function validateAndGetValue(fieldId) {
+  
+    var field = document.getElementById(fieldId);
+    var value = field.value;
+
+    if (!value || parseInt(value) > 20 ) {
+        addClass(field, "error");
+        return null;
+    }
+
+    removeClass(field, "error");
+    return value;
+}
+
 function onCreate() {
+
+    var height = validateAndGetValue("inputHeight");
+    var width = validateAndGetValue("inputWidth");
+
+    if (!height || !width) {
+        return;
+    }
     
-    var heightInput = document.getElementById("inputHeight");
-    var widthInput = document.getElementById("inputWidth");
-    var height = heightInput.value;
-    var width = widthInput.value;
-
-    var validate = true;
-    if (!height) {
-        heightInput.className = "error";
-        validate = false;
-    }
-
-    if (!width) {
-        widthInput.className = "error";
-        validate = false;
-    }
-
-    if (!validate) {
-        return false;
-    }
-
     createCrossword(width, height);
 }
 
-function start() {
+function main() {
     document.getElementById('btnCreate').onclick = onCreate;
     console.log('Application started.');
 }
 
-document.addEventListener("DOMContentLoaded", start, false);
+document.addEventListener("DOMContentLoaded", main, false);
