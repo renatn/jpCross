@@ -12,6 +12,7 @@ function createCrossword(width, heigth) {
 
     var placeHolder = document.getElementById("crosswordTable");
     var table = document.createElement("table");
+    table.id = "crossword";
 
     for (var i=0; i<heigth; i++) {
         var tr = document.createElement("tr");
@@ -50,22 +51,65 @@ function validateAndGetValue(fieldId) {
     return value;
 }
 
-function checkHasSolve() {
-    return false;
+function sum(array) {
+    var result = 0;
+    for (i=0; i<array.length; i++) {
+        result += array[i];
+    }
+    return result;
+}
+
+function checkHasSolve(crossword) {
+
+    for (var i=0; i<crossword.length; i++) {
+        if (sum(crossword[i]) == 0) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function notifyError(message) {
     alert(message);
 }
 
+function tableToArray(tableId) {
+ 
+    var table = document.getElementById(tableId);
+ 
+    var array = [];
+    for (var i=0; i<table.rows.length; i++) {
+        var tr = table.rows[i];
+        
+        var row = [];
+        for(var j=0; j<tr.cells.length; j++) {
+            var td = tr.cells[j];
+
+            var bit = 0;
+            if (hasClass(td, "mark")) {
+                bit = 1;
+            }
+        
+            row.push(bit);
+        }
+
+        array.push(row);
+    }
+
+    return array;
+
+}
+
 function onNext(e) {
     e.preventDefault();
 
-    if (!checkHasSolve()) {
+    var crossword = tableToArray("crossword");
+
+    if (!checkHasSolve(crossword)) {
         notifyError("Кроссворд не имеет решения!");
         return;
     }
-
 }
 
 function onCreate() {
