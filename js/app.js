@@ -8,7 +8,7 @@ function createCrossword(width, heigth) {
 
         for (var j=0; j<width; j++) {
             var td = document.createElement("td");
-            td.innerHTML = "x";
+            td.className = "cell";
             tr.appendChild(td);
         }
 
