@@ -61,13 +61,27 @@ function sum(array) {
 
 function checkHasSolve(crossword) {
 
+    // Zero rows;
     for (var i=0; i<crossword.length; i++) {
         if (sum(crossword[i]) == 0) {
             return false;
         }
     }
 
-    return true;
+    // Zero colums
+    var width = crossword[0].length;
+    for (i=0; i<width; i++) {
+        var total = 0;
+        for (j=0; j<crossword.length; j++) {
+            var row = crossword[j];
+            total += row[i];
+        }    
+        if (total == 0) {
+            return false;
+        }
+    }
+
+     return true;
 }
 
 function notifyError(message) {
