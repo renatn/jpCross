@@ -7,3 +7,15 @@
     height: 25px;
     border: 1px solid gray;
 }
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.mark {
+    background-color: yellow;
+}

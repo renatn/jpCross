@@ -1,3 +1,13 @@
+function toggle(e) {
+    var cell = e.target;
+
+    if (hasClass(cell, "mark")) {
+        removeClass(cell, "mark");
+    } else {
+        addClass(cell, "mark");
+    }
+}
+
 function createCrossword(width, heigth) {
 
     var placeHolder = document.getElementById("crosswordTable");
@@ -9,6 +19,7 @@ function createCrossword(width, heigth) {
         for (var j=0; j<width; j++) {
             var td = document.createElement("td");
             td.className = "cell";
+            td.onclick = toggle;
             tr.appendChild(td);
         }
 
@@ -16,6 +27,13 @@ function createCrossword(width, heigth) {
     }
 
     placeHolder.appendChild(table);
+
+    var editor = document.getElementById("editor");
+    editor.className = "show";
+
+    var form = document.getElementById("form");
+    form.className = "hide";
+
 }
 
 function validateAndGetValue(fieldId) {
@@ -32,6 +50,24 @@ function validateAndGetValue(fieldId) {
     return value;
 }
 
+function checkHasSolve() {
+    return false;
+}
+
+function notifyError(message) {
+    alert(message);
+}
+
+function onNext(e) {
+    e.preventDefault();
+
+    if (!checkHasSolve()) {
+        notifyError("Кроссворд не имеет решения!");
+        return;
+    }
+
+}
+
 function onCreate() {
 
     var height = validateAndGetValue("inputHeight");
@@ -46,6 +82,7 @@ function onCreate() {
 
 function main() {
     document.getElementById('btnCreate').onclick = onCreate;
+    document.getElementById('next').onclick = onNext;
     console.log('Application started.');
 }
 
