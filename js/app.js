@@ -61,7 +61,7 @@ function sum(array) {
 
 function checkHasSolve(crossword) {
 
-    // Zero rows;
+    // Zero rows
     for (var i=0; i<crossword.length; i++) {
         if (sum(crossword[i]) == 0) {
             return false;
@@ -115,6 +115,66 @@ function tableToArray(tableId) {
 
 }
 
+/* Сканирует строку кроссворда и считает количество закрашенных ячеек
+    возращает массив */
+function scanRow(row) {
+    
+    var tip = [];
+    var number = 0;
+
+    for (var i=0; i<row.length; i++) {
+        
+        if (row[i] == 1) {
+            number++;
+        } else {
+            if (number != 0) {
+                tip.push(number);
+            }
+            number = 0;
+        }
+
+    }
+    
+    if (number != 0) {
+        tip.push(number);
+    }
+
+    return tip;    
+}
+
+/* Нормализует ширину строк матрицы */
+function normalize(matrix, width) {
+    for (var i=0; i<matrix.length; i++) {
+        var row = matrix[i];
+        while (row.length < width) {
+            row.unshift(0);
+        }
+    }
+
+}
+
+/* Добавляет подсказки для решения кроссворда в виде количества закрашенных ячеек */
+function addTipsToCrossword(crossword) {
+
+    var max = 0;
+    var col = [];
+    for (var i=0; i<crossword.length; i++) {
+        var tip = scanRow(crossword[i]);
+        if (tip.length > max) {
+            max = tip.length;
+        }
+
+        col.push(tip);
+    } 
+
+    console.log("Max: " + max);
+
+    normalize(col, max);
+
+    console.log(col);
+
+}
+
 function onNext(e) {
     e.preventDefault();
 
@@ -124,6 +184,11 @@ function onNext(e) {
         notifyError("Кроссворд не имеет решения!");
         return;
     }
+
+
+    addTipsToCrossword(crossword);
+
+
 }
 
 function onCreate() {
