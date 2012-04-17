@@ -260,7 +260,7 @@ function onNext(e) {
 
 }
 
-./* Обработчик нажатия кнопки "Готово" */
+/* Обработчик нажатия кнопки "Готово" */
 function onDone(e) {
     e.preventDefault();
     notifyError("Кроссворд решен не верно");
